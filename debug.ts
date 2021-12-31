@@ -20,3 +20,10 @@ const items = [
 ]
 const find = $util.findTreeIds('222222')
 console.log(find(items))
+
+const ddd = $util.transChar(['gt', 'ge', 'lt', 'le'])
+console.log(ddd('范德萨发≤割发代>首'))
+
+
+const dddd = $util.transChar(['gt'])
+console.log(dddd('范德萨发≤割发代>首'))

@@ -14,6 +14,9 @@ export namespace Util {
     id?: string
     children?: string
   }
+  export type TransCharKeys = 'lt' | 'le' | 'gt' |'ge'
+  export type TransCharTargets = Array<TransCharKeys>
+  export type TransCharExtras = any[]
   export interface FindTreeObj {
     id?: string
     children?: Array<FindTreeObj>

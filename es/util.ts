@@ -2,6 +2,7 @@
  * 常用公共方法
  */
 import type { Util } from '../types'
+import * as fp from 'lodash/fp'
 
 const $util = {
   /**
@@ -100,6 +101,34 @@ const $util = {
       })
     }
     return targetParams
+  },
+  /**
+   * 转译特殊字符，需使用lodash/fp模块
+   * @param targets 需要转译的特殊字符代号数组 ['lt', 'le', 'gt', 'ge',[...]]
+   * @param extras 默认支持转译不满足的情况下可以自行补充转译函数数组 [fp.replace(/</g, '&lt;')]
+   * @returns (str: string) => string
+   */
+  transChar (targets: Util.TransCharTargets, extras?: Util.TransCharExtras): (str: string) => string {
+    const lt = fp.replace(/</g, '&lt;')
+    const le = fp.replace(/≤/g, '&le;')
+    const gt = fp.replace(/>/g, '&gt;')
+    const ge = fp.replace(/≥/g, '&ge;')
+    const transArr: Array<[Util.TransCharKeys, any]> = [
+      ['lt', lt],
+      ['le', le],
+      ['gt', gt],
+      ['ge', ge],
+    ]
+    const _extras: Util.TransCharExtras = extras || []
+    const replacers = targets.map(key => {
+      const find = transArr.find(e => e[0] === key)
+      if (find) return find[1]
+    })
+    const transFlow = fp.flowRight(...replacers.concat(_extras))
+    return function (str: string) {
+      return transFlow(str)
+    }
+    JSON.stringify
   },
   /**
     * 从多层级数组中找到目标ID所在的对象
