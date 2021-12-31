@@ -1,6 +1,6 @@
 const shell = require('shelljs')
 const inquirer = require('inquirer')
-const package = require('../package.json')
+const pkg = require('../package.json')
 
 inquirer.prompt([
   {
@@ -12,14 +12,14 @@ inquirer.prompt([
   {
     type: 'list',
     name: 'version',
-    message: `Please choose a semver option(current ${package.version}):`,
+    message: `Please choose a semver option(current ${pkg.version}):`,
     choices: ["patch", "minor", "major"]
   },
   {
     type: 'confirm',
     name: 'confirm',
     message (answer) {
-      return `Are you sure to release the ${answer.version} changes?`
+      return `Are you sure to release the ${answer.version} update?`
     }
   }
 ]).then(answers => {
