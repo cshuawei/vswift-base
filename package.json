@@ -1,7 +1,7 @@
 {
   "name": "vswift-base",
   "version": "0.1.2",
-  "module": "es/index.js",
+  "module": "es/index.ts",
   "files": [
     "es",
     "types"
