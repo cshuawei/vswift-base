@@ -12,3 +12,9 @@ Public methods and regular library based on typescript, accumulated in common bu
 ```shell
 npm run debug
 ```
+
+### Release
+
+```shell
+npm run release
+```
