@@ -10,5 +10,5 @@ Public methods and regular library based on typescript, accumulated in common bu
 ### Local debugging
 
 ```shell
-yarn debug or npm run debug
+npm run debug
 ```
