@@ -135,7 +135,6 @@ const $util = {
     return function (str: string) {
       return transFlow(str)
     }
-    JSON.stringify
   },
   /**
     * 从多层级数组中找到目标ID所在的对象
