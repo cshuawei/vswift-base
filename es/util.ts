@@ -1,8 +1,15 @@
 /**
  * 常用公共方法
  */
-import type { Util } from '../types'
 import * as fp from 'lodash/fp'
+import type {
+  SelectOption,
+  Storage,
+  MergeParams,
+  TransChar,
+  FindTreeObj,
+  FindTreeIds
+} from '../types/util'
 
 const $util = {
   /**
@@ -12,7 +19,7 @@ const $util = {
     * @param key 键名称
     * @param value 键值
     */
-  storage (type: Util.StorageType, action: Util.StorageAction, key: string, ...args: Util.StorageArgs) {
+  storage (type: Storage.Type, action: Storage.Action, key: string, ...args: Storage.Args) {
     const [value] = args
     if (type === 'local') {
       if (action === 'set') {
@@ -72,7 +79,7 @@ const $util = {
     * @param items - 查找的目标数据
     * @returns label名称
     */
-  getLabelByValue (value: string | number, items: Array<Util.SelectOption>) {
+  getLabelByValue (value: string | number, items: Array<SelectOption>) {
     const find = items.find(e => e.value === value)
     return find?.label || '--'
   },
@@ -84,7 +91,7 @@ const $util = {
     * @param {string[]} options.retainKeys - 用于配置目标params中不参与合并的属性
     * @param {string[]} options.deleteKyes - 最终需要删除的多余属性
     */
-  mergeParams <T> (targetParams: T, sourceParams: T, options?: Util.MergeParamsOptions) {
+  mergeParams <T> (targetParams: T, sourceParams: T, options?: MergeParams.Options) {
     const retainKeys = options?.retainKeys || ['current', 'size']
     const deleteKyes = options?.deleteKyes || []
     for (const key in sourceParams) {
@@ -108,18 +115,18 @@ const $util = {
    * @param extras 默认支持转译不满足的情况下可以自行补充转译函数数组 [fp.replace(/</g, '&lt;')]
    * @returns (str: string) => string
    */
-  transChar (targets: Util.TransCharTargets, extras?: Util.TransCharExtras): (str: string) => string {
+  transChar (targets: TransChar.Targets, extras?: TransChar.Extras): (str: string) => string {
     const lt = fp.replace(/</g, '&lt;')
     const le = fp.replace(/≤/g, '&le;')
     const gt = fp.replace(/>/g, '&gt;')
     const ge = fp.replace(/≥/g, '&ge;')
-    const transArr: Array<[Util.TransCharKeys, any]> = [
+    const transArr: Array<[TransChar.Keys, any]> = [
       ['lt', lt],
       ['le', le],
       ['gt', gt],
       ['ge', ge],
     ]
-    const _extras: Util.TransCharExtras = extras || []
+    const _extras: TransChar.Extras = extras || []
     const replacers = targets.map(key => {
       const find = transArr.find(e => e[0] === key)
       if (find) return find[1]
@@ -154,11 +161,11 @@ const $util = {
     * console.log(finder(items))
     * ```
     */
-  findTreeObj (targetId: string, options?: Util.FindTreeObjOptions): Util.FindTreeObjReturn {
-    let findObj: Util.FindTreeObj
+  findTreeObj (targetId: string, options?: FindTreeObj.Options): FindTreeObj.Return {
+    let findObj: FindTreeObj.Options
     const idkey = options?.id || 'id'
-    const childrenKey = options?.children || 'children'
-    return function finder (items: Array<Util.FindTreeObj>) {
+    const childrenKey = (options?.children || 'children') as string
+    return function finder (items: Array<FindTreeObj.Options>) {
       for (const item of items) {
         if (item[idkey] === targetId) {
           findObj = JSON.parse(JSON.stringify(item))
@@ -196,11 +203,11 @@ const $util = {
     * console.log(finder(items))
     * ```
     */
-  findTreeIds (targetId: string | number, options?: Util.FindTreeIdsOptions): Util.FindTreeIdsReturn {
+  findTreeIds (targetId: string | number, options?: FindTreeIds.Options): FindTreeIds.Return {
     let findIds: string | undefined
     const idkey = options?.id || 'id'
     const childrenKey = options?.children || 'children'
-    return function finder (items: Array<Util.FindTreeIdsItem>, parentId?: string | number | undefined) {
+    return function finder (items: Array<FindTreeIds.Item>, parentId?: string | number | undefined) {
       for (const item of items) {
         item[idkey] += parentId ? `,${parentId}` : ''
         if (item[idkey].includes(targetId)) {

@@ -1,14 +1,15 @@
 {
   "name": "vswift-base",
   "version": "0.1.3",
-  "module": "es/index.ts",
+  "types": "es/index.d.ts",
   "files": [
     "es",
+    "lib",
     "types"
   ],
   "scripts": {
-    "debug": "npm run watch \"nodemon ./dist/debug.js\"",
-    "watch": "tsc-watch debug.ts --outDir ./dist --onSuccess",
+    "debug": "npm run compile \"nodemon ./dist/debug.js\"",
+    "compile": "tsc-watch debug.ts --target es5 --moduleResolution node --outDir ./dist --onSuccess",
     "release": "node ./scripts/release.js"
   },
   "keywords": [
@@ -32,6 +33,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "commander": "^8.3.0",
     "lodash": "^4.17.21"
   },
   "description": "Public methods and regular library based on typescript, accumulated in common business scenarios at work."

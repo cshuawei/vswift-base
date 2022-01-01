@@ -1,7 +1,7 @@
 /**
  * 常用正则表达式
  */
-import type { Pattern } from '../types'
+import type { Pattern } from '../types/pattern'
 
 const $pattern: Pattern = {
   // 金额：可以为0，第一位不能为0，小数位不超过2位
