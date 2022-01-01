@@ -1,6 +1,6 @@
 {
   "name": "vswift-base",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "types": "es/index.d.ts",
   "files": [
     "es",
