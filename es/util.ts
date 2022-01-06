@@ -137,6 +137,14 @@ const $util = {
     }
   },
   /**
+   * 首字母大写
+   * @param str 需要转的字符串
+   * @returns string
+   */
+  capitalize (str: string) {
+    return str.toLowerCase().replace(/( |^)[a-z]/g, l => l.toUpperCase())
+  },
+  /**
     * 从多层级数组中找到目标ID所在的对象
     * @param {string} targetId - 目标ID
     * @param {Object} options - 可选参数
